@@ -15,14 +15,14 @@ class App extends React.Component {
         super();
         this.state = {
             students: [],
+            selectedStudent: {},
             firstName: "",
             lastName: "",
             email: "",
             className: "",
+
             inputError: false,
-            showEditModel: false,
-            esitingStudentId: "",
-            selectedStudent: null
+            showEditModel: false
         };
     }
 
@@ -58,16 +58,66 @@ class App extends React.Component {
                 firstName: "",
                 lastName: "",
                 email: "",
-                className: "",
-                inputError: false
+                className: ""
             };
         });
     };
 
-    handleOnChange = (e) => {
-        const { value, id } = e.target;
+    handleOnChangeFirstName = (e) => {
+        const { value } = e.target;
         this.setState({
-            [id]: value
+            firstName: value
+        });
+
+        if (value.length <= 1) {
+            this.setState({
+                inputError: true
+            });
+        } else {
+            this.setState({
+                inputError: false
+            });
+        }
+    };
+
+    handleOnChangeLastName = (e) => {
+        const { value } = e.target;
+        this.setState({
+            lastName: value
+        });
+
+        if (value.length <= 1) {
+            this.setState({
+                inputError: true
+            });
+        } else {
+            this.setState({
+                inputError: false
+            });
+        }
+    };
+
+    handleOnChangeEmail = (e) => {
+        const { value } = e.target;
+        this.setState({
+            email: value
+        });
+
+        if (value.length <= 1) {
+            this.setState({
+                inputError: true
+            });
+        } else {
+            this.setState({
+                inputError: false
+            });
+        }
+    };
+
+    handleOnChangeClassName = (e) => {
+        const { value } = e.target;
+        this.setState({
+            className: value
         });
 
         if (value.length <= 1) {
@@ -106,13 +156,6 @@ class App extends React.Component {
         });
     };
 
-    handleInputEdit = (e) => {
-        const { name, value } = e.target;
-        this.setState({
-            [`${name}Edit`]: value
-        });
-    };
-
     submitEdit = () => {
         this.setState((prevState) => {
             const updatedStudents = prevState.students.map((student) =>
@@ -140,7 +183,7 @@ class App extends React.Component {
                             type="text"
                             placeholder="First Name"
                             id="firstName"
-                            onChange={this.handleOnChange}
+                            onChange={this.handleOnChangeFirstName}
                             value={this.state.firstName}
                         />
 
@@ -149,7 +192,7 @@ class App extends React.Component {
                             type="text"
                             placeholder="Last Name"
                             id="lastName"
-                            onChange={this.handleOnChange}
+                            onChange={this.handleOnChangeLastName}
                             value={this.state.lastName}
                         />
 
@@ -158,7 +201,7 @@ class App extends React.Component {
                             type="email"
                             placeholder="Email"
                             id="email"
-                            onChange={this.handleOnChange}
+                            onChange={this.handleOnChangeEmail}
                             value={this.state.email}
                         />
 
@@ -166,7 +209,7 @@ class App extends React.Component {
                         <select
                             id="className"
                             value={this.state.className}
-                            onChange={this.handleOnChange}
+                            onChange={this.handleOnChangeClassName}
                         >
                             <option value="">Select Class</option>
                             <option value="Algebra">Algebra</option>
@@ -240,8 +283,11 @@ class App extends React.Component {
                                 &times;
                             </span>
                             <h2>Edit Student Data</h2>
+                            <label for="editingFirstName">
+                                Student First Name:
+                            </label>
                             <input
-                                id="firstName"
+                                id="editingFirstName"
                                 type="text"
                                 value={this.state.selectedStudent.firstName}
                                 onChange={(e) =>
@@ -253,9 +299,12 @@ class App extends React.Component {
                                     })
                                 }
                             />
-
+                            <br />
+                            <label for="editingLastName">
+                                Student Last Name:
+                            </label>
                             <input
-                                id="lastName"
+                                id="editingLastName"
                                 type="text"
                                 value={this.state.selectedStudent.lastName}
                                 onChange={(e) =>
@@ -267,9 +316,10 @@ class App extends React.Component {
                                     })
                                 }
                             />
-
+                            <br />
+                            <label for="editingemail">Student Email: </label>
                             <input
-                                id="email"
+                                id="editingEmail"
                                 type="email"
                                 value={this.state.selectedStudent.email}
                                 onChange={(e) =>
@@ -281,9 +331,10 @@ class App extends React.Component {
                                     })
                                 }
                             />
-
+                            <br />
+                            <label for="editingClassName">Class: </label>
                             <select
-                                id="className"
+                                id="editingClassName"
                                 value={this.state.selectedStudent.className}
                                 onChange={(e) =>
                                     this.setState({
@@ -300,6 +351,7 @@ class App extends React.Component {
                                 <option value="Journalism">Journalism</option>
                                 <option value="Literature">Literature</option>
                             </select>
+                            <br />
                             <button
                                 className="save-btn"
                                 onClick={this.submitEdit}
