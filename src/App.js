@@ -2,14 +2,6 @@ import React from "react";
 import { v4 as uuid } from "uuid";
 import "./App.css";
 
-const student = {
-    id: 1,
-    firstName: "A",
-    lastName: "B",
-    email: "some@example.com",
-    class: []
-};
-
 class App extends React.Component {
     constructor() {
         super();
